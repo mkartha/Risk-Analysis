@@ -1,3 +1,11 @@
+/*This is a file for basic Portfolio Analysis in C++
+Includes classes for Storing Asset and Portfolio Data
+Includes RiskEngine for calculating important risk metrics(i.e., historical VaR, Sharpe's ratio, volatility)
+Completed on November 29, 2025
+© MK 2025
+*/
+
+
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -11,7 +19,8 @@ struct Asset{
     std::string name;
     std::vector <double> returns;
     double weight;
-    public Asset (std::string& n, vector<double>& r, double& w:name(n), returns(r), weight(w) {}
+    
+    Asset (std::string& n, vector<double>& r, double w):name(n), returns(r), weight(w) {}
 };
 
 class Portfolio{
@@ -21,15 +30,15 @@ class Portfolio{
     public:
         Portfolio(vector<Asset> position){
             positions=position;
-            if(!allSameSize(position&)
-                trimToMin(position&);
+            if(!allSameSize(positions))
+                trimToMin(positions);
 
             int time=positions[0].returns.size();
             for(int t=0; t<time; t++){
-                total=0;
+                double total=0.0;
                 for(Asset d:positions)
                     total+=d.weight*d.returns[t];
-                portfolioReturns.push_back(total)
+                portfolioReturns.push_back(total);
             }
         }
 
@@ -81,13 +90,14 @@ class Portfolio{
 };
 
 class RiskEngine{
-    vector<double>pfReturns;
     
-    RiskEngine(vector<double>& pf){
-        pfReturns=pf;
-    }
-
+    std::vector<double>pfReturns;
+    
     public:
+        RiskEngine(vector<double>& pf){
+            pfReturns=pf;
+        }
+
         double meanReturn(){
             double total=0;
             for(double d:pfReturns)
@@ -96,11 +106,11 @@ class RiskEngine{
         }
 
         double volatility(){
-            double m=this.meanReturn()
+            double m=this->meanReturn();
             double sum=0;
             for(double d:pfReturns)
                 sum+=(d-m)*(d-m);
-            var=sum/(pfReturns.size()-1);
+            double var=sum/(pfReturns.size()-1);
             return sqrt(var);
         }
 
@@ -119,7 +129,7 @@ class RiskEngine{
                 mdd=min(dd,mdd);
                 val=thisVal;
             }
-            return maxDrawDown;
+            return mdd;
         }    
 
         double hVaR(double cfLevel){
