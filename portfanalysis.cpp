@@ -79,3 +79,55 @@ class Portfolio{
                 return portfolioReturns;
         }
 };
+
+class RiskEngine{
+    vector<double>pfReturns;
+    
+    RiskEngine(vector<double>& pf){
+        pfReturns=pf;
+    }
+
+    public:
+        double meanReturn(){
+            double total=0;
+            for(double d:pfReturns)
+                total+=d;
+            return total/pfReturns.size();
+        }
+
+        double volatility(){
+            double m=this.meanReturn()
+            double sum=0;
+            for(double d:pfReturns)
+                sum+=(d-m)*(d-m);
+            var=sum/(pfReturns.size()-1);
+            return sqrt(var);
+        }
+
+        double calcSharpeRatio(double riskFreeRate){
+            return (this.meanReturn()-riskFreeRate/this.volatility());
+        }
+
+        double maxDrawdown(){
+            double val=1.0;
+            double tempMax=1.0;
+            double mdd=0.0;
+            for(double r:pfReturns){
+                thisVal=val*(1+r)
+                tempMax=max(thisVal,tempMax);
+                dd=(thisVal-tempMax)/tempMax;
+                mdd=min(dd,mdd);
+                val=thisVal;
+            }
+            return maxDrawDown;
+        }    
+
+        double hVaR(double cfLevel){
+            vector<double> temp=pfReturns;
+            std::sort(temp.begin(), temp.end(), std::greater<double>());
+            indLevel=1.0-cfLevel;
+            return 1.0-(temp.at(std::floor(temp.size()*indLevel)));
+        }
+
+
+};
